@@ -3,8 +3,8 @@ const urlsToCache = [
   './index.html',
   './manifest.json'
   // Jika kamu punya gambar icon, tambahkan di sini:
-  // './icon.png',
-  // './icon-512.png'
+  './icon.png',
+  './icon-512.png'
 ];
 
 // Saat aplikasi pertama kali dijalankan, simpan file ke dalam memori (Offline)
