@@ -1,1 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penghitung Skor Gaple 2vs2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .tim {
+            width: 48%;
+        }
+        .skor-total {
+            font-size: 70px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+        .grup-tombol {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        button {
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            width: 100%;
+            max-width: 120px;
+        }
+        .btn-plus-a { background-color: #3498db; }
+        .btn-plus-b { background-color: #2ecc71; }
+        .btn-minus { background-color: #e74c3c; }
+        .btn-reset {
+            background-color: #7f8c8d;
+            margin-top: 30px;
+            width: 100%;
+            max-width: 250px;
+        }
+        button:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
 
+    <h1>Skor Gaple 2 vs 2 🁣</h1>
+
+    <div class="container">
+        <div class="tim">
+            <h2>Tim A</h2>
+            <div class="skor-total" id="skorA">0</div>
+            <div class="grup-tombol">
+                <button class="btn-plus-a" onclick="ubahSkor('A', 1)">+ 1 Poin</button>
+                <button class="btn-plus-a" onclick="ubahSkor('A', 2)">+ 2 Poin</button>
+                <button class="btn-minus" onclick="ubahSkor('A', -1)">- 1 (Kurang)</button>
+            </div>
+        </div>
+
+        <div class="tim">
+            <h2>Tim B</h2>
+            <div class="skor-total" id="skorB">0</div>
+            <div class="grup-tombol">
+                <button class="btn-plus-b" onclick="ubahSkor('B', 1)">+ 1 Poin</button>
+                <button class="btn-plus-b" onclick="ubahSkor('B', 2)">+ 2 Poin</button>
+                <button class="btn-minus" onclick="ubahSkor('B', -1)">- 1 (Kurang)</button>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-reset" onclick="resetSkor()">Mulai Ulang (Reset)</button>
+
+    <script>
+        // 1. MEMBACA SKOR SAAT WEB DIBUKA
+        // Cek apakah ada skor di buku catatan (localStorage). Jika tidak ada, jadikan 0.
+        let totalSkorA = localStorage.getItem('simpanSkorA') ? parseInt(localStorage.getItem('simpanSkorA')) : 0;
+        let totalSkorB = localStorage.getItem('simpanSkorB') ? parseInt(localStorage.getItem('simpanSkorB')) : 0;
+
+        // Tampilkan skor yang sudah dibaca ke layar
+        document.getElementById('skorA').innerText = totalSkorA;
+        document.getElementById('skorB').innerText = totalSkorB;
+
+        // 2. FUNGSI MENGUBAH DAN MENYIMPAN SKOR BARU
+        function ubahSkor(tim, poin) {
+            if (tim === 'A') {
+                totalSkorA = totalSkorA + poin;
+                if (totalSkorA < 0) totalSkorA = 0; // Mencegah minus
+                
+                document.getElementById('skorA').innerText = totalSkorA;
+                localStorage.setItem('simpanSkorA', totalSkorA); // Simpan ke buku catatan
+                
+            } else if (tim === 'B') {
+                totalSkorB = totalSkorB + poin;
+                if (totalSkorB < 0) totalSkorB = 0; // Mencegah minus
+                
+                document.getElementById('skorB').innerText = totalSkorB;
+                localStorage.setItem('simpanSkorB', totalSkorB); // Simpan ke buku catatan
+            }
+        }
+
+        // 3. FUNGSI MENGHAPUS CATATAN (RESET)
+        function resetSkor() {
+            let konfirmasi = confirm("Apakah kamu yakin ingin mereset skor menjadi 0?");
+            if (konfirmasi) {
+                // Kembalikan angka ke 0
+                totalSkorA = 0;
+                totalSkorB = 0;
+                document.getElementById('skorA').innerText = totalSkorA;
+                document.getElementById('skorB').innerText = totalSkorB;
+                
+                // Hapus catatan dari localStorage
+                localStorage.removeItem('simpanSkorA');
+                localStorage.removeItem('simpanSkorB');
+            }
+        }
+    </script>
+</body>
+</html>
