@@ -3,78 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penghitung Skor Gaple 2vs2</title>
+    <title>Domeng by Misterius</title>
     
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#3498db">
+    <meta name="theme-color" content="#1a1a1a">
 
     <style>
+        :root {
+            --efsf-blue: #005b9f;
+            --efsf-yellow: #f1c40f;
+            --zeon-red: #c0392b;
+            --mech-grey: #2c3e50;
+            --bg-color: #f5f6fa;
+            --text-dark: #1e272e;
+            --hp-green: #2ecc71;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #f4f4f9;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
             margin: 0;
             padding: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            overflow-x: hidden;
         }
-        h1 { color: #333; font-size: 24px; }
+
+        h1 { 
+            font-size: 24px; 
+            font-weight: 900;
+            border-bottom: 3px solid var(--text-dark);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 5px;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+            gap: 8px;
+        }
+
+        .misterius { 
+            color: var(--zeon-red); 
+            font-family: monospace; 
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--zeon-red);
+            letter-spacing: 0;
+            box-sizing: content-box; /* Kunci perbaikannya di sini */
+            animation: typing 10s steps(9, end) infinite, blink-caret 0.5s step-end infinite;
+        }
+
+        @keyframes typing {
+            0%, 10% { width: 0; }
+            30%, 80% { width: 9ch; } /* Kembali ke 9ch presisi */
+            90%, 100% { width: 0; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--zeon-red); }
+        }
+
         .container {
             display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            justify-content: space-between;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        .tim { width: 48%; }
-        .skor-total { font-size: 70px; font-weight: bold; color: #2c3e50; margin: 10px 0; }
-        .grup-tombol { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+
+        .tim { 
+            width: 50%; 
+            background: #ffffff;
+            padding: 20px 20px 40px 20px;
+            border: 2px solid var(--text-dark);
+            box-shadow: 4px 4px 0px var(--text-dark);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tim.efsf { border-top: 5px solid var(--efsf-blue); }
+        .tim.zeon { border-top: 5px solid var(--zeon-red); }
+
+        h2 {
+            font-size: 30px; 
+            margin-top: 0;
+            margin-bottom: 5px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .skor-total { 
+            font-size: 80px; 
+            font-weight: 900; 
+            font-family: monospace;
+            margin: 0 0 20px; 
+            line-height: 1;
+            position: relative;
+        }
+
+        .grup-tombol { 
+            display: flex; 
+            justify-content: center;
+            gap: 10px; 
+            margin-bottom: 15px;
+        }
+
         button {
-            padding: 15px 20px; font-size: 18px; font-weight: bold; cursor: pointer;
-            border: none; border-radius: 8px; color: white; width: 100%; max-width: 120px;
+            padding: 16px 20px; 
+            font-size: 20px; 
+            font-weight: bold; 
+            cursor: pointer;
+            border: 2px solid var(--text-dark); 
+            background: transparent;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            transition: all 0.1s ease-in-out;
+            width: 100%;
         }
-        .btn-plus-a { background-color: #3498db; }
-        .btn-plus-b { background-color: #2ecc71; }
-        .btn-minus { background-color: #e74c3c; }
-        .btn-reset { background-color: #7f8c8d; margin-top: 30px; width: 100%; max-width: 250px; }
-        button:hover { opacity: 0.8; }
+
+        button:active {
+            transform: translate(2px, 2px);
+            box-shadow: none;
+        }
+
+        .btn-plus.efsf { background-color: var(--efsf-blue); color: white; border-color: var(--efsf-blue); }
+        .btn-plus.zeon { background-color: var(--zeon-red); color: white; border-color: var(--zeon-red); }
+        .btn-minus { background-color: var(--mech-grey); color: white; border-color: var(--mech-grey); }
+
+        .btn-reset { 
+            background-color: transparent; 
+            color: var(--text-dark);
+            margin-top: 40px; 
+            width: 100%; 
+            max-width: 300px; 
+            border: 2px solid var(--text-dark);
+            box-shadow: 4px 4px 0px var(--text-dark);
+        }
+
+        .btn-reset:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px var(--text-dark);
+        }
+
+        .dec-line {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            font-size: 10px;
+            font-family: monospace;
+            color: #ccc;
+        }
+
+        @keyframes floatDamage {
+            0% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+            20% { transform: translate(-50%, -20px) scale(1.5); }
+            100% { opacity: 0; transform: translate(-50%, -80px) scale(1); }
+        }
+
+        .damage-popup {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            font-size: 40px;
+            font-weight: 900;
+            font-family: monospace;
+            pointer-events: none;
+            animation: floatDamage 1s ease-out forwards;
+            z-index: 10;
+            text-shadow: 3px 3px 0 var(--text-dark);
+        }
+
+        .damage-plus { color: var(--hp-green); }
+        .damage-minus { color: var(--zeon-red); }
+
+        .combo-tracker {
+            font-size: 14px;
+            font-weight: bold;
+            font-family: monospace;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: none;
+            margin-top: auto;
+            border: 1px dashed var(--text-dark);
+        }
+
+        .combo-tracker.aktif {
+            display: inline-block;
+        }
+
+        .combo-tracker.plus { color: var(--hp-green); border-color: var(--hp-green); }
+        .combo-tracker.minus { color: var(--zeon-red); border-color: var(--zeon-red); }
+
     </style>
 </head>
 <body>
 
-    <h1>Skor Gaple 2 vs 2 🁣</h1>
+    <h1>DOMENG BY <span class="misterius">MISTERIUS</span></h1>
 
     <div class="container">
-        <div class="tim">
-            <h2>Tim A</h2>
+        <div class="tim efsf" id="timA">
+            <h2 id="judulTimA">🤖</h2>
             <div class="skor-total" id="skorA">0</div>
             <div class="grup-tombol">
-                <button class="btn-plus-a" onclick="ubahSkor('A', 1)">+ 1 Poin</button>
-                <button class="btn-plus-a" onclick="ubahSkor('A', 2)">+ 2 Poin</button>
-                <button class="btn-minus" onclick="ubahSkor('A', -1)">- 1</button>
+                <button class="btn-plus efsf" onclick="ubahSkor('A', 1)">+1</button>
+                <button class="btn-minus" onclick="ubahSkor('A', -1)">-1</button>
             </div>
+            <div class="combo-tracker" id="comboA"></div>
+            <div class="dec-line">RX-78</div>
         </div>
 
-        <div class="tim">
-            <h2>Tim B</h2>
+        <div class="tim zeon" id="timB">
+            <h2 id="judulTimB">👹</h2>
             <div class="skor-total" id="skorB">0</div>
             <div class="grup-tombol">
-                <button class="btn-plus-b" onclick="ubahSkor('B', 1)">+ 1 Poin</button>
-                <button class="btn-plus-b" onclick="ubahSkor('B', 2)">+ 2 Poin</button>
-                <button class="btn-minus" onclick="ubahSkor('B', -1)">- 1</button>
+                <button class="btn-plus zeon" onclick="ubahSkor('B', 1)">+1</button>
+                <button class="btn-minus" onclick="ubahSkor('B', -1)">-1</button>
             </div>
+            <div class="combo-tracker" id="comboB"></div>
+            <div class="dec-line">MS-06</div>
         </div>
     </div>
 
-    <button class="btn-reset" onclick="resetSkor()">Mulai Ulang (Reset)</button>
+    <button class="btn-reset" onclick="resetSkor()">SYSTEM OVERRIDE (RESET)</button>
 
     <script>
-        // Mendaftarkan Service Worker
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-            .then(() => console.log("Service Worker berhasil didaftarkan!"))
-            .catch((error) => console.log("Service Worker gagal didaftarkan:", error));
+        const emojiTimA = ["🤖", "😎", "👽", "🤠", "🥶", "🥸"];
+        const emojiTimB = ["👹", "👺", "🤡", "😡", "😈", "💀"];
+
+        function acakJudul() {
+            document.getElementById('judulTimA').innerText = emojiTimA[Math.floor(Math.random() * emojiTimA.length)];
+            document.getElementById('judulTimB').innerText = emojiTimB[Math.floor(Math.random() * emojiTimB.length)];
         }
+
+        window.onload = acakJudul;
 
         let totalSkorA = localStorage.getItem('simpanSkorA') ? parseInt(localStorage.getItem('simpanSkorA')) : 0;
         let totalSkorB = localStorage.getItem('simpanSkorB') ? parseInt(localStorage.getItem('simpanSkorB')) : 0;
@@ -82,7 +254,123 @@
         document.getElementById('skorA').innerText = totalSkorA;
         document.getElementById('skorB').innerText = totalSkorB;
 
+        let comboA = 0;
+        let timerA_interval;
+        let timeLeftA = 0;
+
+        let comboB = 0;
+        let timerB_interval;
+        let timeLeftB = 0;
+
+        function getarDevice(durasi) {
+            if ("vibrate" in navigator) {
+                navigator.vibrate(durasi);
+            }
+        }
+
+        function tanganiCombo(tim, poin) {
+            let totalCombo = 0;
+
+            if (tim === 'A') {
+                comboA += poin;
+                totalCombo = comboA;
+                clearInterval(timerA_interval);
+                timeLeftA = 30;
+                timerA_interval = setInterval(() => hitungMundurCombo('A'), 1000);
+            } else {
+                comboB += poin;
+                totalCombo = comboB;
+                clearInterval(timerB_interval);
+                timeLeftB = 30;
+                timerB_interval = setInterval(() => hitungMundurCombo('B'), 1000);
+            }
+
+            perbaruiUICumbo(tim, totalCombo, 30);
+        }
+
+        function hitungMundurCombo(tim) {
+            if (tim === 'A') {
+                timeLeftA--;
+                if (timeLeftA <= 0) {
+                    resetCombo('A');
+                } else {
+                    perbaruiUICumbo('A', comboA, timeLeftA);
+                }
+            } else {
+                timeLeftB--;
+                if (timeLeftB <= 0) {
+                    resetCombo('B');
+                } else {
+                    perbaruiUICumbo('B', comboB, timeLeftB);
+                }
+            }
+        }
+
+        function perbaruiUICumbo(tim, totalCombo, waktu) {
+            let elemCombo = document.getElementById(`combo${tim}`);
+            if (totalCombo === 0) {
+                resetCombo(tim);
+                return;
+            }
+
+            elemCombo.classList.add('aktif');
+            const tanda = totalCombo > 0 ? '+' : '';
+            elemCombo.innerText = `COMBO: ${tanda}${totalCombo} (${waktu}s)`;
+            
+            if (totalCombo > 0) {
+                elemCombo.classList.add('plus');
+                elemCombo.classList.remove('minus');
+            } else {
+                elemCombo.classList.add('minus');
+                elemCombo.classList.remove('plus');
+            }
+        }
+
+        function resetCombo(tim) {
+            if (tim === 'A') {
+                comboA = 0;
+                clearInterval(timerA_interval);
+            }
+            if (tim === 'B') {
+                comboB = 0;
+                clearInterval(timerB_interval);
+            }
+            const elemCombo = document.getElementById(`combo${tim}`);
+            elemCombo.classList.remove('aktif', 'plus', 'minus');
+            elemCombo.innerText = '';
+        }
+
+        function munculkanPopupRPG(tim, poin) {
+            const wadah = document.getElementById(`tim${tim}`);
+            const popup = document.createElement('div');
+            popup.classList.add('damage-popup');
+            
+            if (poin > 0) {
+                popup.innerText = `+${poin}`;
+                popup.classList.add('damage-plus');
+            } else {
+                popup.innerText = `${poin}`;
+                popup.classList.add('damage-minus');
+            }
+
+            const offsetX = (Math.random() - 0.5) * 40;
+            popup.style.marginLeft = `${offsetX}px`;
+
+            wadah.appendChild(popup);
+
+            setTimeout(() => {
+                popup.remove();
+            }, 1000);
+        }
+
         function ubahSkor(tim, poin) {
+            if (tim === 'A' && totalSkorA === 0 && poin < 0) return;
+            if (tim === 'B' && totalSkorB === 0 && poin < 0) return;
+
+            getarDevice(40);
+            munculkanPopupRPG(tim, poin);
+            tanganiCombo(tim, poin);
+
             if (tim === 'A') {
                 totalSkorA += poin;
                 if (totalSkorA < 0) totalSkorA = 0;
@@ -97,12 +385,16 @@
         }
 
         function resetSkor() {
-            if (confirm("Apakah kamu yakin ingin mereset skor menjadi 0?")) {
+            if (confirm("WARNING: RESET ALL DATA?")) {
+                getarDevice([100, 50, 100]); 
                 totalSkorA = 0; totalSkorB = 0;
                 document.getElementById('skorA').innerText = totalSkorA;
                 document.getElementById('skorB').innerText = totalSkorB;
                 localStorage.removeItem('simpanSkorA');
                 localStorage.removeItem('simpanSkorB');
+                acakJudul();
+                resetCombo('A');
+                resetCombo('B');
             }
         }
     </script>
