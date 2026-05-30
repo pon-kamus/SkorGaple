@@ -213,7 +213,7 @@
 
     <div class="container">
         <div class="tim efsf" id="timA">
-            <h2 id="judulTimA">🤖</h2>
+            <h2 id="judulTimA" onclick="ubahEmoji('A')" style="cursor: pointer;">🤖</h2>
             <div class="skor-total" id="skorA">0</div>
             <div class="grup-tombol">
                 <button class="btn-plus efsf" onclick="ubahSkor('A', 1)">+1</button>
@@ -224,7 +224,7 @@
         </div>
 
         <div class="tim zeon" id="timB">
-            <h2 id="judulTimB">👹</h2>
+            <h2 id="judulTimB" onclick="ubahEmoji('B')" style="cursor: pointer;">👹</h2>
             <div class="skor-total" id="skorB">0</div>
             <div class="grup-tombol">
                 <button class="btn-plus zeon" onclick="ubahSkor('B', 1)">+1</button>
@@ -241,12 +241,29 @@
         const emojiTimA = ["🤖", "😎", "👽", "🤠", "🥶", "🥸"];
         const emojiTimB = ["👹", "👺", "🤡", "😡", "😈", "💀"];
 
-        function acakJudul() {
-            document.getElementById('judulTimA').innerText = emojiTimA[Math.floor(Math.random() * emojiTimA.length)];
-            document.getElementById('judulTimB').innerText = emojiTimB[Math.floor(Math.random() * emojiTimB.length)];
+        function ubahEmoji(tim) {
+            if (tim === 'A') {
+                const e = emojiTimA[Math.floor(Math.random() * emojiTimA.length)];
+                document.getElementById('judulTimA').innerText = e;
+                localStorage.setItem('emojiTimA', e);
+            } else {
+                const e = emojiTimB[Math.floor(Math.random() * emojiTimB.length)];
+                document.getElementById('judulTimB').innerText = e;
+                localStorage.setItem('emojiTimB', e);
+            }
         }
 
-        window.onload = acakJudul;
+        function muatEmoji() {
+            const eA = localStorage.getItem('emojiTimA');
+            const eB = localStorage.getItem('emojiTimB');
+            if (eA) document.getElementById('judulTimA').innerText = eA;
+            else ubahEmoji('A');
+
+            if (eB) document.getElementById('judulTimB').innerText = eB;
+            else ubahEmoji('B');
+        }
+
+        window.onload = muatEmoji;
 
         let totalSkorA = localStorage.getItem('simpanSkorA') ? parseInt(localStorage.getItem('simpanSkorA')) : 0;
         let totalSkorB = localStorage.getItem('simpanSkorB') ? parseInt(localStorage.getItem('simpanSkorB')) : 0;
@@ -392,7 +409,9 @@
                 document.getElementById('skorB').innerText = totalSkorB;
                 localStorage.removeItem('simpanSkorA');
                 localStorage.removeItem('simpanSkorB');
-                acakJudul();
+                localStorage.removeItem('emojiTimA');
+                localStorage.removeItem('emojiTimB');
+                muatEmoji();
                 resetCombo('A');
                 resetCombo('B');
             }
